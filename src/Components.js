@@ -4,13 +4,15 @@ const Copy = React.lazy(() => import("./components/Copy"));
 const Cover = React.lazy(() => import("./components/Cover"));
 const Twitter = React.lazy(() => import("./components/Twitter"));
 const Link = React.lazy(() => import("./components/Link"));
+const Button = React.lazy(() => import("./components/Button"));
 
 const stock = {
   Channels,
   Copy,
   Cover,
   Link,
-  Twitter
+  Twitter,
+  Button
 };
 
 const createElement = block =>

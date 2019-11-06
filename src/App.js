@@ -2,6 +2,7 @@ import React, { useState, Suspense } from "react";
 import Highlight from "./Highlight";
 import Components from "./Components";
 import "./App.css";
+import { Container } from "@material-ui/core";
 
 const page1 = {
   title: "Page 1",
@@ -54,6 +55,13 @@ const page2 = {
               subscribeUrl: "https://google.com",
               key: "link"
             }
+          },
+          {
+            id: "asdf",
+            component: "Button",
+            props: {
+              text: "My Button"
+            }
           }
         ]
       }
@@ -90,7 +98,7 @@ function App() {
   const [curPage, setCurPage] = useState(page1);
 
   return (
-    <div className="app-component">
+    <Container maxWidth="sm">
       <nav className="app-nav">
         <button onClick={ev => setCurPage(page1)}>Page 1</button>
         <button onClick={ev => setCurPage(page2)}>Page 2</button>
@@ -101,8 +109,8 @@ function App() {
       <Suspense fallback={<div>Loading...</div>}>
         <DynamicPage page={curPage} />
       </Suspense>
-      <Highlight code={curPage} />
-    </div>
+      {/* <Highlight code={curPage} /> */}
+    </Container>
   );
 }
 
