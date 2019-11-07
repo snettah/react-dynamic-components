@@ -1,11 +1,11 @@
-import React, { useState, Suspense } from "react";
+import React, { useState, Suspense, Fragment } from "react";
 import Highlight from "./Highlight";
 import Components from "./Components";
-import "./App.css";
+// import "./App.css";
 import { Container } from "@material-ui/core";
 
-const page1 = {
-  title: "Page 1",
+const page2 = {
+  title: "Page 2",
   sections: [
     {
       id: "qwr1",
@@ -25,42 +25,69 @@ const page1 = {
   ]
 };
 
-const page2 = {
-  title: "Page 2",
+const page1 = {
+  title: "Page 1",
   sections: [
     {
-      id: "3erq",
-      component: "Copy",
+      id: "1",
+      component: "Paper",
       props: {
-        content: "This page renders a different set of components."
-      }
-    },
-    {
-      id: "4qwr",
-      component: "Channels",
-      props: {
+        elevation: 4,
         children: [
           {
-            id: "5trw",
-            component: "Twitter",
+            component: "Grid",
             props: {
-              handle: "example.com",
-              key: "twitter"
-            }
-          },
-          {
-            id: "6tyu",
-            component: "Link",
-            props: {
-              subscribeUrl: "https://google.com",
-              key: "link"
-            }
-          },
-          {
-            id: "asdf",
-            component: "Button",
-            props: {
-              text: "My Button"
+              container: true,
+              spacing: 2,
+              children: [
+                {
+                  component: "Form",
+                  props: {
+                    children: [
+                      {
+                        component: "TextField",
+                        props: {
+                          placeholder: "My input",
+                          name: "myinput"
+                        }
+                      },
+                      {
+                        component: "Grid",
+                        props: {
+                          item: true,
+                          xs: 6,
+                          align: "center",
+                          children: {
+                            component: "Button",
+                            props: {
+                              type: "submit",
+                              children: "Send",
+                              color: "primary",
+                              variant: "contained"
+                            }
+                          }
+                        }
+                      },
+                      {
+                        component: "Grid",
+                        props: {
+                          item: true,
+                          xs: 6,
+                          align: "center",
+                          children: {
+                            component: "Button",
+                            props: {
+                              children: "Cancel",
+                              color: "secondary",
+                              variant: "outlined"
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
             }
           }
         ]
@@ -73,9 +100,9 @@ const page2 = {
  * Renders components based on data in the
  * {@code root} prop.
  */
-function Section({ root }) {
-  return <section className="section-component">{Components(root)}</section>;
-}
+// function Section({ root }) {
+//   return <section className="section-component">{}</section>;
+// }
 
 /**
  * Renders a page defined by its JSON
@@ -85,12 +112,13 @@ function Section({ root }) {
  * the top.
  */
 function DynamicPage({ page }) {
+  console.log("page: ", page.sections.length);
   return (
-    <div className="dynamicpage-component">
+    <>
       {page.sections.map(s => (
-        <Section key={s.id} root={s} />
+        <Fragment key={s.id}>{Components(s)}</Fragment>
       ))}
-    </div>
+    </>
   );
 }
 
@@ -99,14 +127,14 @@ function App() {
 
   return (
     <Container maxWidth="sm">
-      <nav className="app-nav">
-        <button onClick={ev => setCurPage(page1)}>Page 1</button>
-        <button onClick={ev => setCurPage(page2)}>Page 2</button>
-      </nav>
-      <p>
+      {/* <p>
         Current Page: <b>{curPage.title}</b>
-      </p>
+      </p> */}
       <Suspense fallback={<div>Loading...</div>}>
+        {/* <nav className="app-nav">
+        <button onClick={() => setCurPage(page1)}>Page 1</button>
+        <button onClick={() => setCurPage(page2)}>Page 2</button>
+      </nav> */}
         <DynamicPage page={curPage} />
       </Suspense>
       {/* <Highlight code={curPage} /> */}
